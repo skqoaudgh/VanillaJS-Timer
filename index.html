@@ -8,7 +8,19 @@
         <title>VanillaJS Timer</title>
     </head>
     <body>
-        
+        <div class="time-wrapper">
+            <input type="text" maxlength="2" placeholder="00" class="time" id="hour">:
+            <input type="text" maxlength="2" placeholder="00" class="time" id="minute">:
+            <input type="text" maxlength="2" placeholder="00" class="time" id="second">
+        </div>
+        <div class="wrapper">
+            <canvas id="canvas" width="600" height="600"></canvas>
+        </div>
+        <div>
+            <span class="control" id="reset">0</span>
+            <span class="control" id="start">></span>
+            <span class="control" id="paused">||</span>
+        </div>
     </body>
     <script type="text/javascript" src="script.js"></script>
 </html>
