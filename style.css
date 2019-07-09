@@ -8,6 +8,18 @@ body {
     font-size: 24px;
 }
 
+#timetext {
+    position: absolute;
+    top: 310px;
+    left: 315px;
+    width: 350px;
+    height: 80px;
+    text-align: center;
+    font-size: 54px;
+    color: grey;
+    font-family: 'Helvetica';
+}
+
 .time {
     all: unset;
     width: 50px;
