@@ -5,6 +5,7 @@ let reset = document.getElementById('reset');
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let paused = false;
+let isActive = false;
 let timer;
 let cur = 0;
 let total = 0;
@@ -23,38 +24,50 @@ function checkTimeInput(event) {
 }
 
 function resetTimer() {
-    ctx.beginPath();
-    ctx.arc(300, 300, 240, -Math.PI/2, Math.PI*2);
-    ctx.strokeStyle = '#e6e6e6';
-    ctx.lineWidth = 22;
-    ctx.stroke(); 
-
-    paused = false;
-    clearInterval(timer);
-    total = 0;
-    cur = 0;
+    if(isActive) {
+        ctx.beginPath();
+        ctx.arc(300, 300, 240, -Math.PI/2, Math.PI*2);
+        ctx.strokeStyle = '#e6e6e6';
+        ctx.lineWidth = 22;
+        ctx.stroke(); 
+    
+        paused = false;
+        clearInterval(timer);
+        total = 0;
+        cur = 0;
+        for(let i=0; i<3; i++) {
+            times[i].value = '';
+        }
+    }
 }
 
 function startTimer() {
     if(!paused) {
         total = (+times[0].value)*3600 + (+times[1].value)*60 + (+times[2].value);
-        cur = 0;
-        timer = setInterval(function() {
-            cur += 0.02;
-            drawPieTimer(cur, total);
-        }, 20);
+        if(total > 0) {
+            cur = 0;
+            timer = setInterval(function() {
+                cur += 0.02;
+                drawPieTimer(cur, total);
+            }, 20);
+            isActive = true;
+        }
     }
     else {
         timer = setInterval(function() {
             cur += 0.02;
             drawPieTimer(cur, total);
-        }, 20);      
+        }, 20);
+        isActive = true;
     }
 }
 
 function pauseTimer() {
-    paused = true;
-    clearInterval(timer);
+    if(!paused) {
+        paused = true;
+        isActive = false;
+        clearInterval(timer);
+    }
 }
 
 // canvas Function
@@ -89,5 +102,6 @@ for(let i=0; i<3; i++) {
 start.addEventListener('click', startTimer);
 pause.addEventListener('click', pauseTimer);
 reset.addEventListener('click', resetTimer);
+
 //-----
 initialCanvas();
