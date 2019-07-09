@@ -1,6 +1,13 @@
 let times = document.getElementsByClassName('time');
+let start = document.getElementById('start');
+let pause = document.getElementById('pause');
+let reset = document.getElementById('reset');
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
+let paused = false;
+let timer;
+let cur = 0;
+let total = 0;
 
 // util Function
 function checkTimeInput(event) {
@@ -13,6 +20,41 @@ function checkTimeInput(event) {
     else if(parseInt(event.target.value) > 60) {
         event.target.value = '';
     }
+}
+
+function resetTimer() {
+    ctx.beginPath();
+    ctx.arc(300, 300, 240, -Math.PI/2, Math.PI*2);
+    ctx.strokeStyle = '#e6e6e6';
+    ctx.lineWidth = 22;
+    ctx.stroke(); 
+
+    paused = false;
+    clearInterval(timer);
+    total = 0;
+    cur = 0;
+}
+
+function startTimer() {
+    if(!paused) {
+        total = (+times[0].value)*3600 + (+times[1].value)*60 + (+times[2].value);
+        cur = 0;
+        timer = setInterval(function() {
+            cur += 0.02;
+            drawPieTimer(cur, total);
+        }, 20);
+    }
+    else {
+        timer = setInterval(function() {
+            cur += 0.02;
+            drawPieTimer(cur, total);
+        }, 20);      
+    }
+}
+
+function pauseTimer() {
+    paused = true;
+    clearInterval(timer);
 }
 
 // canvas Function
@@ -44,6 +86,8 @@ function drawTimeText(text) {
 for(let i=0; i<3; i++) {
     times[i].addEventListener('change', checkTimeInput);
 }
-
+start.addEventListener('click', startTimer);
+pause.addEventListener('click', pauseTimer);
+reset.addEventListener('click', resetTimer);
 //-----
 initialCanvas();
