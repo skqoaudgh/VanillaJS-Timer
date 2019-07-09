@@ -9,9 +9,9 @@ body {
 }
 
 #timetext {
-    position: absolute;
-    top: 310px;
-    left: 315px;
+    position: relative;
+    top: -330px;
+    left: 120px;
     width: 350px;
     height: 80px;
     text-align: center;
