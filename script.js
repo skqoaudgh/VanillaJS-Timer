@@ -51,7 +51,7 @@ function secondsToTimeString(sec) {
 }
 
 function resetTimer() {
-    if(isActive) {
+    if(isActive || paused) {
         resetTimerDrawing();
 
         paused = false;
