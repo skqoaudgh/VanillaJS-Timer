@@ -68,27 +68,17 @@ function resetTimer() {
 
 function startTimer() {
     if(!isActive) {
-        timetext.style.color = 'grey'
         if(!paused) {
             resetTimerDrawing();
+            cur = 0;
             total = (+times[0].value)*3600 + (+times[1].value)*60 + (+times[2].value);
-            if(total > 0) {
-                cur = 0;
-                timer = setInterval(function() {
-                    cur += 0.02;
-                    timetext.innerHTML = secondsToTimeString(Math.floor(total-cur)+1);
-                    if(Math.floor(total-cur)+1 <= 5) {
-                        timetext.style.color = 'red'
-                    }
-                    drawPieTimer(cur, total);
-                    if(cur >= total) {
-                        clearInterval(timer);
-                    }
-                }, 20);
-                isActive = true;
-            }        
         }
         else {
+            paused = false; 
+        }
+
+        timetext.style.color = 'grey'
+        if(total > 0) {
             timer = setInterval(function() {
                 cur += 0.02;
                 timetext.innerHTML = secondsToTimeString(Math.floor(total-cur)+1);
@@ -98,11 +88,13 @@ function startTimer() {
                 drawPieTimer(cur, total);
                 if(cur >= total) {
                     clearInterval(timer);
+                    paused = false;
+                    timetext.innerHTML = 'TIME OVER';
+                    timetext.style.color = '#2da1ff';
                 }
             }, 20);
-            paused = false;     
             isActive = true;
-        }
+        }  
     }
 }
 
@@ -134,7 +126,7 @@ function drawPieTimer(curTime, endTime) {
     ctx.arc(300, 300, 240, -Math.PI/2, angle);
     ctx.strokeStyle = '#ff7474';
     ctx.lineWidth = 20;
-    ctx.stroke(); 
+    ctx.stroke();
 }
 
 // eventListener Function
