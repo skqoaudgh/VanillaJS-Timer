@@ -68,6 +68,7 @@ function resetTimer() {
 
 function startTimer() {
     if(!isActive) {
+        timetext.style.color = 'grey'
         if(!paused) {
             resetTimerDrawing();
             total = (+times[0].value)*3600 + (+times[1].value)*60 + (+times[2].value);
@@ -76,6 +77,9 @@ function startTimer() {
                 timer = setInterval(function() {
                     cur += 0.02;
                     timetext.innerHTML = secondsToTimeString(Math.floor(total-cur)+1);
+                    if(Math.floor(total-cur)+1 <= 5) {
+                        timetext.style.color = 'red'
+                    }
                     drawPieTimer(cur, total);
                     if(cur >= total) {
                         clearInterval(timer);
@@ -88,6 +92,9 @@ function startTimer() {
             timer = setInterval(function() {
                 cur += 0.02;
                 timetext.innerHTML = secondsToTimeString(Math.floor(total-cur)+1);
+                if(Math.floor(total-cur)+1 <= 5) {
+                    timetext.style.color = 'red'
+                }
                 drawPieTimer(cur, total);
                 if(cur >= total) {
                     clearInterval(timer);
