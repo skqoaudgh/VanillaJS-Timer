@@ -104,8 +104,11 @@ function pauseTimer() {
         paused = true;
         isActive = false;
         clearInterval(timer);
+        timetext.innerHTML += '<br>Paused</br>'
+        timetext.style.color = '#ff7474'
     }
     else {
+        timetext.style.color = 'grey'
         startTimer();
     }
 }
